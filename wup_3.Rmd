@@ -17,6 +17,8 @@ davisdata <- read.csv(file="UCDavis.csv")
 ## Our Goal is to answer this question Is there a difference between the alcohol consumed between the row
 ## you choose to sit in??
 
+Yes, there is a difference in everyones drinking level it is proven that people in the back tend to drink more than the people in the middle and the front, The people in the middle and front seem to drink the same amount of alcohol.
+
 ## Now with ggplot - first select the basic data
 
 ```{r}
@@ -37,8 +39,29 @@ basicCN + geom_boxplot(notch=TRUE,outlier.color = "red") + stat_boxplot(geom ='e
 
 ## Numerical Summarys 
 
+```{r}
+favstats(alcohol~Seat,data=davisdata)
+```
+
+The people in the back seem to drink more than the people in the front and middle.
+
 ## Inferential Tests
+```{r}
+model1 <- aov(alcohol~Seat,data=davisdata)
+summary.aov(model1)
+```
+The P-Value is 0.000116. The is a very small number so we know that there is a difference in alcohol consumption based on where people sit.
+
+## When significant follow up with TukeyHSD  
+
+```{r}
+plot(TukeyHSD(model1))
+```
+
+The people in the back drink more than the people in the middle and the middle people drink more than the people in the front. The middle and front there is no difference there is a difference between the back and the middle.
 
 ## Conclusions
+
+Yes, there is a difference in everyones drinking level it is proven that people in the back tend to drink more than the people in the middle and the front, The people in the middle and front seem to drink the same amount of alcohol. The P-Value is 0.000116. The is a very small number so we know that there is a difference in alcohol consumption based on where people sit.
 
 
